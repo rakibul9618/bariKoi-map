@@ -1,0 +1,21 @@
+# Ignore node_modules directory
+node_modules
+
+# Ignore build output directory
+.next
+
+# Ignore TypeScript build output directory
+out
+
+# Ignore other build output directories
+build
+dist
+
+# Ignore generated files
+*.generated.*
+*.graphql.ts
+
+
+
+
+

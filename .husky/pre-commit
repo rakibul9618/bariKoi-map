@@ -1,0 +1,53 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+
+echo '👀👀👀 Testing and building this project before commiting 👀👀👀'
+
+## ---------------------------------------------------
+npm run lint:fix ||
+(
+    echo 'Eslint file fixing failed'
+    false 
+)
+echo "ESLINT FIX SUCCESS ✅✅✅✅✅✅"
+
+
+##----------------------------------------------------
+npm run lint:check ||
+(
+    echo 'Eslint check failed'
+    false;
+)
+echo "ESLINT CHECK SUCCESS ✅✅✅✅✅✅"
+
+
+##----------------------------------------------------
+npm run prettier:fix ||
+(
+    echo "Can't format code"
+    false;
+)
+echo "PRETTIER FORMAT SUCCESS ✅✅✅✅✅✅"
+
+
+##----------------------------------------------------
+npm run prettier:check ||
+(
+    echo 'The format is disgusting'
+    false;
+)
+echo "PRETTIER CHECK SUCCESS ✅✅✅✅✅✅"
+
+
+#If everything passes... try to run build
+echo 'Your code looks good ---> trying to build it now 👍👍👍👍👍👍'
+
+
+##----------------------------------------------------
+# npm build ||
+# (
+#     echo 'Your next build failed'
+#     false;
+# )
+# echo "PROJECT BUILT SUCCESSFULLY COMPLETE 😎😎😎😎😎😎"
