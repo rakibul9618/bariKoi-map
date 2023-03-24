@@ -9,6 +9,7 @@ import {
   addressState,
   removeAddress,
   setAddress,
+  setDropdownClick,
 } from '@/redux/addressSlice/addressSlice';
 import { setLatLng } from '@/redux/mapViewportSlice/mapViewportSlice';
 import { SearchInfoPropsType } from '@/@types/sections';
@@ -16,6 +17,8 @@ import { SearchInfoPropsType } from '@/@types/sections';
 // icons
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
+import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 
 const SearchInfo: React.FC<SearchInfoPropsType> = ({
   isExpand,
@@ -26,13 +29,13 @@ const SearchInfo: React.FC<SearchInfoPropsType> = ({
   const [autoCompleteList, setAutoCompleteList] = useState<AddressType[]>([]);
 
   // redux state and dispatch
-  const { address } = useAppSelector(addressState);
+  const { address, isDropdownClick } = useAppSelector(addressState);
   const dispatch = useAppDispatch();
 
   // on change handler for search input field
   const onChangeHandler = async (
     event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  ): Promise<void> => {
     const { value } = event.target;
     setSearchValue(value);
     dispatch(removeAddress());
@@ -45,9 +48,10 @@ const SearchInfo: React.FC<SearchInfoPropsType> = ({
   };
 
   // set the new address when user click an address from search dropdown
-  const handleAddress = (address: AddressType) => {
+  const handleAddress = (address: AddressType): void => {
     const { longitude, latitude } = address;
     dispatch(setAddress(address));
+    dispatch(setDropdownClick(!isDropdownClick));
     dispatch(
       setLatLng({ longitude: Number(longitude), latitude: Number(latitude) }),
     );
@@ -55,12 +59,18 @@ const SearchInfo: React.FC<SearchInfoPropsType> = ({
     setSearchValue(address.address.split(',')[0]);
   };
 
+  const cleanAllData = (): void => {
+    setSearchValue('');
+    setAutoCompleteList([]);
+    dispatch(removeAddress());
+  };
+
   return (
     <Box
       sx={{
         p: '20px',
         width: '50%',
-        marginLeft: `${isExpand ? '0px' : '-50%'}`,
+        marginLeft: { xs: '-50%', md: `${isExpand ? '0px' : '-50%'}` },
         transition: 'margin-left 0.3s',
         overflowY: 'auto',
         overflowX: 'hidden',
@@ -91,16 +101,24 @@ const SearchInfo: React.FC<SearchInfoPropsType> = ({
         <Button
           sx={{
             color: '#000',
+            backgroundColor: '#fff',
+            width: '35px',
+            height: '35px',
             position: `${isExpand ? 'static' : 'absolute'}`,
             left: '10px',
-            top: '20px',
+            top: '10px',
             zIndex: '999',
+            borderRadius: '50%',
+            display: 'grid',
+            placeItems: 'center',
           }}
           onClick={() => setIsExpand(!isExpand)}
         >
           <ArrowBackIosIcon
             sx={{
-              width: '20px',
+              width: '100%',
+              height: '100%',
+              marginLeft: '-4px',
               transform: `${isExpand ? 'rotate(0deg)' : 'rotate(180deg)'}`,
               transition: 'transform 0.3s',
             }}
@@ -109,7 +127,14 @@ const SearchInfo: React.FC<SearchInfoPropsType> = ({
       </Box>
       <Box
         sx={{
-          position: 'relative',
+          width: { xs: '95%', sm: '80%', md: 'auto' },
+          position: { xs: 'absolute', md: 'relative' },
+          top: { xs: '20px', md: 'auto' },
+          left: { xs: '50%', md: 'auto' },
+          transform: { xs: 'translate(-50%, 0%)', md: 'translate(0%, 0%)' },
+          backgroundColor: '#fff',
+          zIndex: '999',
+          mt: { xs: '0px', md: '40px' },
         }}
       >
         <Box
@@ -120,7 +145,6 @@ const SearchInfo: React.FC<SearchInfoPropsType> = ({
             display: 'flex',
             gap: '10px',
             alignItems: 'center',
-            mt: '40px',
             borderRadius: `${
               autoCompleteList.length > 0 ? '8px 8px 0 0' : '8px'
             }`,
@@ -132,7 +156,12 @@ const SearchInfo: React.FC<SearchInfoPropsType> = ({
             placeholder="Search location"
             type="text"
             value={searchValue}
+            sx={{ p: '0px' }}
           />
+          {searchValue.length > 0 && (
+            <ClearIcon onClick={cleanAllData} sx={{ cursor: 'pointer' }} />
+          )}
+
           <Button
             sx={{
               px: '10px',
@@ -156,7 +185,7 @@ const SearchInfo: React.FC<SearchInfoPropsType> = ({
               right: '0px',
               top: '55px',
               background: '#fdfdfd',
-              p: '12px 20px',
+              py: '12px',
               boxShadow: '0 2px 4px rgba(0,0,0,.2)',
               borderRadius: '0 0 8px 8px',
               listStyleType: 'none',
@@ -165,10 +194,20 @@ const SearchInfo: React.FC<SearchInfoPropsType> = ({
             {autoCompleteList.map((addressList: AddressType) => (
               <Box
                 component="li"
-                sx={{ cursor: 'pointer', py: '5px' }}
+                sx={{
+                  cursor: 'pointer',
+                  py: '5px',
+                  px: '20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '15px',
+                  transition: 'all 0.3s',
+                  '&:hover': { backgroundColor: 'rgba(69,79,99,.08)' },
+                }}
                 key={addressList.id}
                 onClick={() => handleAddress(addressList)}
               >
+                <RoomOutlinedIcon sx={{ color: '#3c4043', width: '18px' }} />
                 <Typography
                   variant="h6"
                   sx={{ fontWeight: '400', fontSize: '16px', color: '#3c4043' }}
@@ -182,7 +221,20 @@ const SearchInfo: React.FC<SearchInfoPropsType> = ({
         )}
       </Box>
       {address.id && (
-        <Box sx={{ mt: '50px' }}>
+        <Box
+          sx={{
+            position: { xs: 'fixed', md: 'static' },
+            left: '0%',
+            right: '0%',
+            bottom: '0%',
+            zIndex: '999',
+            mt: { md: '50px' },
+            background: { xs: '#2a2e43', md: '#fff' },
+            color: { xs: '#fff', md: '#000' },
+            p: { xs: '20px 16px', sm: '20px 32px', md: '0px' },
+            boxShadow: { xs: '0px -5px #2ea35c', md: 'none' },
+          }}
+        >
           <Typography variant="h5">{address.place}</Typography>
           <Typography sx={{ mt: '5px' }}>{address.address}</Typography>
           <Typography sx={{ mt: '5px' }}>Thana: {address.city}</Typography>

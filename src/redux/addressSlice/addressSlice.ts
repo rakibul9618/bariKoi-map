@@ -17,6 +17,7 @@ const initialState: AddressSliceType = {
     postCode: null,
     uCode: '',
   },
+  isDropdownClick: false,
 };
 
 export const addressSlice = createSlice({
@@ -25,7 +26,7 @@ export const addressSlice = createSlice({
   reducers: {
     setAddress: (state, action: PayloadAction<AddressType>) => {
       const newAddress: AddressType = { ...action.payload };
-      // if address has comma speared value then get the first value as a place ti
+      // if address has comma speared value then get the first value as a place
       if (newAddress.address.indexOf(',') > 0) {
         newAddress.place = newAddress.address.split(',')[0];
         newAddress.address = newAddress.address
@@ -39,9 +40,13 @@ export const addressSlice = createSlice({
     removeAddress: (state) => {
       state.address = initialState.address;
     },
+    setDropdownClick: (state, action: PayloadAction<boolean>) => {
+      state.isDropdownClick = action.payload;
+    },
   },
 });
 
-export const { setAddress, removeAddress } = addressSlice.actions;
+export const { setAddress, removeAddress, setDropdownClick } =
+  addressSlice.actions;
 export default addressSlice.reducer;
 export const addressState = (state: RootState) => state.address;

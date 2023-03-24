@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import Head from 'next/head';
-import { Inter } from 'next/font/google';
-import { Box } from '@mui/material';
-import Map from '@/components/sections/Map';
-import SearchInfo from '@/components/sections/SearchInfo';
+import React, { useState } from "react";
+import Head from "next/head";
+import { Inter } from "next/font/google";
+import { Box } from "@mui/material";
+import Map from "@/components/sections/Map";
+import SearchInfo from "@/components/sections/SearchInfo";
 
-// inter google front
-const inter = Inter({ subsets: ['latin'] });
+// google font
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [isExpand, setIsExpand] = useState<boolean>(true);
@@ -25,9 +25,9 @@ export default function Home() {
       <Box
         className={inter.className}
         sx={{
-          display: 'flex',
-          height: '100vh',
-          position: 'relative',
+          display: "flex",
+          height: "100vh",
+          position: "relative",
         }}
       >
         <SearchInfo isExpand={isExpand} setIsExpand={setIsExpand} />

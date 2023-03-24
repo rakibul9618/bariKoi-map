@@ -1,4 +1,4 @@
-import baseURL from './api';
+import baseURL from "./api";
 
 const apiKey = process.env.NEXT_PUBLIC_BARIKOI_API_KEY;
 

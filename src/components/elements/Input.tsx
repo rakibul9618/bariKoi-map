@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Input as MuiInput } from '@mui/material';
 import { InputPropsType } from '@/@types/elements';
-
 
 const Input: React.FC<InputPropsType> = ({
   name,
@@ -11,6 +10,11 @@ const Input: React.FC<InputPropsType> = ({
   value,
   sx,
 }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   return (
     <MuiInput
       name={name}
@@ -21,7 +25,7 @@ const Input: React.FC<InputPropsType> = ({
       fullWidth={true}
       sx={sx}
       disableUnderline={true}
-      autoFocus={true}
+      inputRef={inputRef}
     />
   );
 };

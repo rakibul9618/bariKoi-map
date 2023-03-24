@@ -1,11 +1,11 @@
-import { MyAppProps } from '@/@types/common';
-import { Provider as ReduxProvider } from 'react-redux';
-import { ThemeProvider } from '@mui/material';
-import { CacheProvider } from '@emotion/react';
-import { store } from '@/redux/store';
-import createEmotionCache from '@/utils/theme/createEmotionCache';
-import theme from '@/utils/theme/theme';
-import '@/styles/globals.css';
+import { MyAppProps } from "@/@types/common";
+import { Provider as ReduxProvider } from "react-redux";
+import { ThemeProvider } from "@mui/material";
+import { CacheProvider } from "@emotion/react";
+import { store } from "@/redux/store";
+import createEmotionCache from "@/utils/theme/createEmotionCache";
+import theme from "@/utils/theme/theme";
+import "@/styles/globals.css";
 
 // create the client-side cache with emotion
 const clientSideEmotionCache = createEmotionCache();

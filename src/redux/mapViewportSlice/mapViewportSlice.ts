@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { LatLngType, MapViewPortType } from '@/@types/map';
-import { RootState } from '../store';
+import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { LatLngType, MapViewPortType } from "@/@types/map";
+import { RootState } from "../store";
 
 // initial state value
 const initialState: MapViewPortType = {
@@ -11,7 +11,7 @@ const initialState: MapViewPortType = {
 };
 
 export const mapViewportSlice = createSlice({
-  name: 'mapViewport',
+  name: "mapViewport",
   initialState,
   reducers: {
     setLatLng: (state, action: PayloadAction<LatLngType>) => {

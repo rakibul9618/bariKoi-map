@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit';
-import addressSlice from './addressSlice/addressSlice';
-import mapViewportSlice from './mapViewportSlice/mapViewportSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import addressSlice from "./addressSlice/addressSlice";
+import mapViewportSlice from "./mapViewportSlice/mapViewportSlice";
 
 export const store = configureStore({
   reducer: {

@@ -19,4 +19,5 @@ export interface AddressType {
 
 export type AddressSliceType = {
   address: AddressType;
+  isDropdownClick: boolean;
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const LocationDetailsCard: React.FC = () => {
   return <div>LocationDetailsCard</div>;

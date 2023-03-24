@@ -1,10 +1,10 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from "axios";
 
-// basic instance for all api call
+// instance for all api call
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BARIKOI_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
