@@ -237,8 +237,8 @@ const SearchInfo: React.FC<SearchInfoPropsType> = ({
         >
           <Typography variant="h5">{address.place}</Typography>
           <Typography sx={{ mt: '5px' }}>{address.address}</Typography>
-          <Typography sx={{ mt: '5px' }}>Thana: {address.city}</Typography>
-          <Typography sx={{ mt: '5px' }}>District: {address.area}</Typography>
+          <Typography sx={{ mt: '5px' }}>Area: {address.area}</Typography>
+          <Typography sx={{ mt: '5px' }}>City: {address.city}</Typography>
           <Typography sx={{ mt: '5px' }}>
             Postcode: {address.postCode}
           </Typography>
